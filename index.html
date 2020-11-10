@@ -14,8 +14,111 @@
  
   <div class="user-login">
   </div>
-  
-  <div class="post-form">
+
+  <div class="post-form-container">
+    <form class="post-form">
+      <input
+          type="text"
+          name="title"
+          value=""
+          placeholder="Add a title"
+          class="input-text"
+        />
+        <br />
+        <input
+          type="text"
+          name="image_url"
+          value=""
+          placeholder="Add an image URL"
+          class="input-text"
+        />
+        <br />
+        <input
+          type="text"
+          name="content"
+          value=""
+          placeholder="Content"
+          class="input-text"
+        />
+        <br />
+        <input
+          type="text"
+          name="github_url"
+          value=""
+          placeholder="Add GitHub URL"
+          class="input-text"
+        />
+        <br />
+        <input
+          type="submit"
+          name="submit"
+          value="Submit New Post"
+          class="submit"
+        />
+    </form>
+  </div>
+
+  <div class="edit-post-container">
+  <form class="edit-post-form">
+    <input
+        type="text"
+        name="title"
+        value=""
+        placeholder="Add a title"
+        class="input-text"
+      />
+      <br />
+      <input
+        type="text"
+        name="image_url"
+        value=""
+        placeholder="Add an image URL"
+        class="input-text"
+      />
+      <br />
+      <input
+        type="text"
+        name="content"
+        value=""
+        placeholder="Content"
+        class="input-text"
+      />
+      <br />
+      <input
+        type="text"
+        name="github_url"
+        value=""
+        placeholder="Add GitHub URL"
+        class="input-text"
+      />
+      <br />
+      <input
+        type="hidden"
+        name="author"
+        value=""
+        class="input-text"
+      />
+      <br />
+      <input
+        type="hidden"
+        name="user_id"
+        value=""
+        class="input-text"
+      />
+      <br />
+      <input
+        type="hidden"
+        name="id"
+        value=""
+        class="input-text"
+      />
+      <input
+        type="submit"
+        name="submit"
+        value="Submit Edit"
+        class="submit"
+      />
+  </form>
   </div>
 
   <div class="posts-container">
