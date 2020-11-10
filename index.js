@@ -1,10 +1,11 @@
 function main() {
-  fetchPosts()
-  createPostFormEventListener()
-  createEditPostFormEventListener()
+  // fetchPosts()
+  // createPostFormEventListener()
+  // createEditPostFormEventListener()
   fetchUser()
   hideForm()
 }
+
 let currentPosts = []
 let currentUser;
 
