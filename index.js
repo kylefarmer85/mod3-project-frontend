@@ -1,7 +1,7 @@
 function main() {
-  // fetchPosts()
-  // createPostFormEventListener()
-  // createEditPostFormEventListener()
+  fetchPosts()
+  createPostFormEventListener()
+  createEditPostFormEventListener()
   fetchUser()
   hideForm()
 }
@@ -33,8 +33,8 @@ const userLogin = qs('.user-form')
 function fetchUser() {
   fetch(USERS_URL)
   .then(resp => resp.json())
-  .then(users => console.log(users)
-    // users.forEach(user => console.log(user))
+  .then(users => 
+    users.forEach(user => console.log(user))
 )}
 
 function renderUser(user) {
@@ -101,11 +101,11 @@ function renderPost(post) {
 
   const postDiv = ce('div')
   postDiv.className = "card"
-  const userName = ce('h3')
+  const titleH3 = ce('h3')
   const postImage = ce('img')
   const author = ce('p')
 
-  userName.innerText = post.title
+  titleH3.innerText = post.title
   postImage.src = post.image_url
 
   author.innerText = post.author
