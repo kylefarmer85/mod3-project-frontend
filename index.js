@@ -33,6 +33,8 @@ const postFormContainer = qs('.post-form-container')
 const usersContainer = qs('.users-container')
 const userLoginForm = qs('.user-login')
 const showContainer = qs('.show-container')
+const loginContainer = qs('.login-container')
+const showPostContainer = qs('.show-post-container')
 
 
 function userLogin() {
@@ -65,27 +67,23 @@ function userLogin() {
 function toggleLogin() {
 
   const loginNav = qs('#login-nav')
-  userLoginForm.style.display = "none"
+  loginContainer.style.display = "none"
   loginNav.addEventListener("click", () => {
-    if (userLoginForm.style.display === "block") {
-      userLoginForm.style.display = "none"
-    } else {
-      userLoginForm.style.display = "block" 
-    }  
+    loginContainer.style.display = "block"
+    postFormContainer.style.display = "none"
+    showPostContainer.style.display = "none"
   })  
 }
 
 function togglePostForm() {
-
+  
   const postFormNav = qs('#new-post-nav')
-  postForm.style.display = "none"
+  postFormContainer.style.display = "none"
 
   postFormNav.addEventListener("click", () => {
-    if (postForm.style.display === "none") {
-      postForm.style.display = "block"
-    } else {
-      postForm.style.display = "none"
-    }
+    loginContainer.style.display = "none"
+    showPostContainer.style.display = "none"
+    postFormContainer.style.display = "block"
   })
 }
 
@@ -112,7 +110,7 @@ function renderPost(post) {
 
   // const editBtn = ce("button")
   // editBtn.innerText = "Edit Post"
-
+ 
   // editBtn.addEventListener('click', () => {
   //   // if (currentUser.id === post.user_id)
   //     editPostForm[0].value = post.title
@@ -129,7 +127,10 @@ function renderPost(post) {
 
 // add event listener to card to append post to show-container
   postDiv.addEventListener("click", () => {
-    showContainer.innerHTML = 
+    loginContainer.style.display = "none"
+    postFormContainer.style.display = "none"
+    showPostContainer.style.display = "block"
+    showPostContainer.innerHTML = 
     `<h1>${post.title}</h1>
     <img src=${post.image_url}/>
     <p>${post.content}</p>
@@ -146,6 +147,7 @@ function renderPost(post) {
       <p>${comment.author}</p>`
       commentUl.append(commentLi)
     }
+
   })
 }
 
