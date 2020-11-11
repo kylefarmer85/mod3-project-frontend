@@ -2,8 +2,9 @@ function main() {
   fetchPosts()
   createPostFormEventListener()
   createEditPostFormEventListener()
-  fetchUser()
-  hideForm()
+  // fetchUser()
+  hideForm() 
+  userLogin()
 }
 
 let currentPosts = []
@@ -17,6 +18,7 @@ function qs(selector){
   return document.querySelector(selector)
 }
 
+
 const USERS_URL = "http://localhost:3000/api/v1/users"
 const POSTS_URL = "http://localhost:3000/api/v1/posts"
 const COMMENTS_URL = "http://localhost:3000/api/v1/comments"
@@ -26,7 +28,7 @@ const postsContainer = qs('.posts-container')
 const postFormContainer = qs('.post-form-container')
 
 const usersContainer = qs('.users-container')
-const userLogin = qs('.user-form')
+const userLoginForm = qs('.user-login')
 
 
 
@@ -34,40 +36,75 @@ function fetchUser() {
   fetch(USERS_URL)
   .then(resp => resp.json())
   .then(users => 
-    users.forEach(user => console.log(user))
+    users.forEach(user => renderUser(user))
 )}
 
 function renderUser(user) {
   currentuser = user
   const userDiv = ce('div')
-  userDiv.className = "card"
-  const userName = ce('h3')
+
+  const userName = ce('p')
   userName.innerText = user.userName
 
   const profilePic = ce('img')
   profilePic.src = user.profile_pic
 
-  const email = ce('p')
+  const email = ce('h4')
   email.innerText = user.email
 
+  const space = ce('br')
+
   const editBtn = ce('button')
+  editBtn.className = "user-edit-btn"
   editBtn.innerText = "Edit"
 
   editBtn.addEventListener("click", (e) => {
-    
-    debugger
-
-    editForm[0].value = e.target.parentElement.parentElement.children[0].innerText
-    
-    editForm[1].value = e.target.parentElement.parentElement.children[1].innerText
   
-    editForm[2].value = e.target.parentElement.parentElement.children[2].innerText
+    debugger
+    const email = e.target.previousElementSibling.previousElementSibling.innerText
+
+    // profile_pic
+    const userImage = e.target.previousElementSibling.previousElementSibling.previousElementSibling.src
+
+    // profileName is the user name 
+    const profileName = e.target.parentElement.firstElementChild.innerText
+
+    
   })
 
-  userDiv.append(userName, profilePic, email)
+  userDiv.append(userName, profilePic, email, space, editBtn)
   usersContainer.append(userDiv)
 
 }
+
+function userLogin() {
+
+  userLoginForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+  
+
+    fetch (USERS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        username: e.target[0].value,
+        email: e.target[1].value,
+        profile_pic: e.target[2].value
+
+      })
+    })
+    .then(resp => resp.json())
+    .then(console.log)
+
+  
+
+    e.target.reset()
+})
+}
+
 
 function hideForm() {
   let addUser = false;
@@ -188,4 +225,13 @@ function createEditPostFormEventListener() {
 
 
 
+
 main()
+
+// document.addEventListener('click', (e) => {
+//   if(e.target.className === 'user-edit-btn'){
+//     // this is where we run the handle edit function 
+//   }else if (e.target.className === 'user-edit-btn') {
+//     // this is where do the submit user action
+//   }
+// })
