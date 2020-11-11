@@ -1,15 +1,9 @@
 
-
-
-
-
-
-
-
-
 div.show-container {
-  
+  width: 100%;
+  min-height: 500px;
 }
+
 
 div.posts-container {
   display: flex;
