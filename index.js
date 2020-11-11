@@ -2,8 +2,9 @@ function main() {
   fetchPosts()
   createPostFormEventListener()
   createEditPostFormEventListener()
-  fetchUser()
-  hideForm()
+  // fetchUser()
+  // hideForm() 
+  userLogin()
 }
 
 let currentPosts = []
@@ -17,6 +18,7 @@ function qs(selector){
   return document.querySelector(selector)
 }
 
+
 const USERS_URL = "http://localhost:3000/api/v1/users"
 const POSTS_URL = "http://localhost:3000/api/v1/posts"
 const COMMENTS_URL = "http://localhost:3000/api/v1/comments"
@@ -26,67 +28,100 @@ const postsContainer = qs('.posts-container')
 const postFormContainer = qs('.post-form-container')
 
 const usersContainer = qs('.users-container')
-const userLogin = qs('.user-form')
+const userLoginForm = qs('.user-login')
+const showContainer = qs('.show-container')
 
 
+// function fetchUser() {
+//   fetch(USERS_URL)
+//   .then(resp => resp.json())
+//   .then(users => 
+//     users.forEach(user => renderUser(user))
+// )}
 
-function fetchUser() {
-  fetch(USERS_URL)
-  .then(resp => resp.json())
-  .then(users => 
-    users.forEach(user => console.log(user))
-)}
+// function renderUser(user) {
+//   currentuser = user
+//   const userDiv = ce('div')
 
-function renderUser(user) {
-  currentuser = user
-  const userDiv = ce('div')
-  userDiv.className = "card"
-  const userName = ce('h3')
-  userName.innerText = user.userName
+//   const userName = ce('p')
+//   userName.innerText = user.userName
 
-  const profilePic = ce('img')
-  profilePic.src = user.profile_pic
+//   const profilePic = ce('img')
+//   profilePic.src = user.profile_pic
 
-  const email = ce('p')
-  email.innerText = user.email
+//   const email = ce('h4')
+//   email.innerText = user.email
 
-  const editBtn = ce('button')
-  editBtn.innerText = "Edit"
+//   const space = ce('br')
 
-  editBtn.addEventListener("click", (e) => {
-    
+//   const editBtn = ce('button')
+//   editBtn.className = "user-edit-btn"
+//   editBtn.innerText = "Edit"
+
+//   editBtn.addEventListener("click", (e) => {
   
 
-    editForm[0].value = e.target.parentElement.parentElement.children[0].innerText
+//     const email = e.target.previousElementSibling.previousElementSibling.innerText
+
+//     // profile_pic
+//     const userImage = e.target.previousElementSibling.previousElementSibling.previousElementSibling.src
+
+//     // profileName is the user name 
+//     const profileName = e.target.parentElement.firstElementChild.innerText
+
     
-    editForm[1].value = e.target.parentElement.parentElement.children[1].innerText
-  
-    editForm[2].value = e.target.parentElement.parentElement.children[2].innerText
+//   })
+
+//   userDiv.append(userName, profilePic, email, space, editBtn)
+//   usersContainer.append(userDiv)
+
+// }
+
+function userLogin() {
+
+  userLoginForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    fetch (USERS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        username: e.target[0].value,
+        email: e.target[1].value,
+        profile_pic: e.target[2].value
+
+      })
+    })
+    .then(resp => resp.json())
+    .then(console.log)
+
+    e.target.reset()
   })
-
-  userDiv.append(userName, profilePic, email)
-  usersContainer.append(userDiv)
-
 }
 
-function hideForm() {
-  let addUser = false;
-  const newUserBtn = document.querySelector("#new-user-btn");
-  const userFormContainer = document.querySelector(".container");
-  newUserBtn.addEventListener("click", () => {
-    // hide & seek with the form
-    addUser = !addUser;
-    if (addUser) {
-      userFormContainer.style.display = "none";
-    } else {
-      userFormContainer.style.display = "block";
-    }
-  });
-}
+
+
+// function hideForm() {
+//   let addUser = false;
+//   const newUserBtn = document.querySelector("#new-user-btn");
+//   const userFormContainer = document.querySelector(".container");
+//   newUserBtn.addEventListener("click", () => {
+//     // hide & seek with the form
+//     addUser = !addUser;
+//     if (addUser) {
+//       userFormContainer.style.display = "none";
+//     } else {
+//       userFormContainer.style.display = "block";
+//     }
+//   });
+// }
 
   
   
-  
+
 
 
 
@@ -113,21 +148,29 @@ function renderPost(post) {
   const editBtn = ce("button")
   editBtn.innerText = "Edit Post"
 
+  editBtn.addEventListener('click', () => {
+    // if (currentUser.id === post.user_id)
+      editPostForm[0].value = post.title
+      editPostForm[1].value = post.image_url
+      editPostForm[2].value = post.content
+      editPostForm[3].value = post.github_url
+      editPostForm[4].value = post.author
+      editPostForm[5].value = post.user_id
+      editPostForm[6].value = post.id
+    })
+
   postDiv.append(titleH3, postImage, author, editBtn)
   postsContainer.append(postDiv)
 
+  postDiv.addEventListener("click", () => {
+    showContainer.innerHTML = 
+    `<h1>${post.title}</h1>
+    <img src=${post.image_url}/>
+    <p>${post.content}</p>`
 
-  editBtn.addEventListener('click', () => {
-  // if (currentUser.id === post.user_id)
-    editPostForm[0].value = post.title
-    editPostForm[1].value = post.image_url
-    editPostForm[2].value = post.content
-    editPostForm[3].value = post.github_url
-    editPostForm[4].value = post.author
-    editPostForm[5].value = post.user_id
-    editPostForm[6].value = post.id
   })
 }
+
 
 
 function createPostFormEventListener() {
@@ -188,4 +231,13 @@ function createEditPostFormEventListener() {
 
 
 
+
 main()
+
+// document.addEventListener('click', (e) => {
+//   if(e.target.className === 'user-edit-btn'){
+//     // this is where we run the handle edit function 
+//   }else if (e.target.className === 'user-edit-btn') {
+//     // this is where do the submit user action
+//   }
+// })

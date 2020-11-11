@@ -1,29 +1,24 @@
-body {
-  margin: 0;
-  padding: 0;
+
+
+
+
+
+
+
+
+
+div.show-container {
+  
 }
 
-header {
-  background-color: #4caf50;
-  margin: 0 auto;
-  height: 50px;
-}
-
-header h2 {
-  padding: 10px;
-  margin: 0;
-}
-
-main {
-  display: grid;
+div.posts-container {
+  display: flex;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: 20px;
   padding-top: 10px;
   padding-bottom: 30px;
 }
-
-
 
 div.card {
   background-color: #eeeeee;
@@ -32,16 +27,4 @@ div.card {
   box-shadow: 10px 10px grey;
   padding: 10px;
   border-radius: 10px;
-}
-
-p {
-  font-size: 1.5em;
-  color: black;
-  font-family: Helvetica;
-}
-
-li {
-  font-size: 1.05em;
-  list-style: none;
-  padding-right: 20px;
 }
