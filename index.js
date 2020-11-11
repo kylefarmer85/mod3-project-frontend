@@ -175,7 +175,7 @@ function renderPost(post) {
       <p>${comment.author}</p>`
       commentUl.append(commentLi)
     }
-    createUserProfile()
+  
   })
 }
 
@@ -195,13 +195,12 @@ function createUserProfile() {
 
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
-    postLi.innerText = post
+    postLi.innerText = post.title
     userPostsUl.append(postLi)
   })
 
 
-
-  userProfileDiv.append(displayUsername, displayEmail, displayProfilePic,)
+  userProfileDiv.append(displayUsername, displayEmail, displayProfilePic, userPostsUl)
   profileContainer.innerHTML = ""
   profileContainer.append(userProfileDiv)
 
