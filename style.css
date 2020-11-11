@@ -13,7 +13,8 @@
 div.show-container {
   width: 100%;
   min-height: 500px;
-  
+  max-height: 500px;
+  overflow: scroll;
 }
 
 
@@ -35,6 +36,7 @@ div.card {
   box-shadow: 10px 10px grey;
   padding: 10px;
   border-radius: 10px;
+  overflow: hidden
   
 }
 
