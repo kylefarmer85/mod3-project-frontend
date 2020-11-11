@@ -55,7 +55,7 @@ function renderUser(user) {
 
   editBtn.addEventListener("click", (e) => {
     
-    debugger
+  
 
     editForm[0].value = e.target.parentElement.parentElement.children[0].innerText
     
