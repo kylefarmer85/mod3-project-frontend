@@ -125,16 +125,13 @@ function renderPost(post) {
   const postDiv = ce('div')
   postDiv.innerHTML = ''
   postDiv.className = "card"
-  const titleH3 = ce('h3')
+
   const postImage = ce('img')
   postImage.className = "post-image"
-  const author = ce('p')
+  postImage.src = post.image_url
 
   const titleH3 = ce('h3')
   titleH3.innerText = post.title
-
-  const postImage = ce('img')
-  postImage.src = post.image_url
 
   const author = ce('p')
   author.innerText = post.author
