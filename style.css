@@ -1,17 +1,31 @@
 
+.post-image {
+  max-width: 75%;
+  max-height: 50%;
+  margin-left: auto;
+  margin-right: auto 
+}
+
+.card {
+  text-align: center;
+}
+
 div.show-container {
   width: 100%;
   min-height: 500px;
+  
 }
 
 
 div.posts-container {
+  flex-wrap: wrap;
   display: flex;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: 20px;
   padding-top: 10px;
   padding-bottom: 30px;
+
 }
 
 div.card {
@@ -21,4 +35,6 @@ div.card {
   box-shadow: 10px 10px grey;
   padding: 10px;
   border-radius: 10px;
+  
 }
+

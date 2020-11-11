@@ -7,6 +7,7 @@ function main() {
   userLogin()
   toggleLogin()
   togglePostForm()
+  toggleUserProfile()
 
 }
 
@@ -35,6 +36,7 @@ const userLoginForm = qs('.user-login')
 const showContainer = qs('.show-container')
 const loginContainer = qs('.login-container')
 const showPostContainer = qs('.show-post-container')
+const profileContainer = qs('.profile-container')
 
 
 function userLogin() {
@@ -56,10 +58,14 @@ function userLogin() {
       })
     })
     .then(resp => resp.json())
-    .then(loggedInUser => currentUser = loggedInUser)
-    //assigns user to currentUser
+    .then(loggedInUser => {
+      //assigns user to currentUser
+      currentUser = loggedInUser
+      createUserProfile()
+    })
+    
     e.target.reset()
-    userLoginForm.style.display = "none"
+    loginContainer.style.display = "none"
   })
 }
 
@@ -68,9 +74,11 @@ function toggleLogin() {
 
   const loginNav = qs('#login-nav')
   loginContainer.style.display = "none"
+
   loginNav.addEventListener("click", () => {
     loginContainer.style.display = "block"
     postFormContainer.style.display = "none"
+    profileContainer.style.display = "none"
     showPostContainer.style.display = "none"
   })  
 }
@@ -81,10 +89,27 @@ function togglePostForm() {
   postFormContainer.style.display = "none"
 
   postFormNav.addEventListener("click", () => {
+    if (currentUser) {
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
+    profileContainer.style.display = "none"
     postFormContainer.style.display = "block"
+    }
   })
+}
+
+function toggleUserProfile() {
+
+  const profileNav = qs('#profile-nav')
+  profileContainer.style.display = "none"
+
+  profileNav.addEventListener("click", () => {
+    loginContainer.style.display = "none"
+    showPostContainer.style.display = "none"
+    postFormContainer.style.display = "none"
+    profileContainer.style.display = "block"
+  })
+
 }
 
 
@@ -101,6 +126,7 @@ function renderPost(post) {
   postDiv.className = "card"
   const titleH3 = ce('h3')
   const postImage = ce('img')
+  postImage.className = "post-image"
   const author = ce('p')
 
   titleH3.innerText = post.title
@@ -129,7 +155,9 @@ function renderPost(post) {
   postDiv.addEventListener("click", () => {
     loginContainer.style.display = "none"
     postFormContainer.style.display = "none"
+    profileContainer.style.display = "none"
     showPostContainer.style.display = "block"
+
     showPostContainer.innerHTML = 
     `<h1>${post.title}</h1>
     <img src=${post.image_url}/>
@@ -147,8 +175,36 @@ function renderPost(post) {
       <p>${comment.author}</p>`
       commentUl.append(commentLi)
     }
-
+    createUserProfile()
   })
+}
+
+function createUserProfile() {
+
+  const userProfileDiv = ce('div')
+  const displayUsername = ce('h2')
+  const displayEmail = ce('p')
+  const displayProfilePic = ce('img')
+  const userPostsUl = ce('ul')
+  const userCommentsUl = ce('ul')
+
+  displayUsername.innerText = currentUser.username
+  displayEmail.innerText = currentUser.email
+  displayProfilePic.src = currentUser.profile_pic
+  userPostsUl.innerText = `${currentUser.username}'s Posts:`
+
+  currentUser.posts.forEach(post => {
+    const postLi = ce('li')
+    postLi.innerText = post
+    userPostsUl.append(postLi)
+  })
+
+
+
+  userProfileDiv.append(displayUsername, displayEmail, displayProfilePic,)
+  profileContainer.innerHTML = ""
+  profileContainer.append(userProfileDiv)
+
 }
 
 
@@ -168,8 +224,8 @@ function createPostFormEventListener() {
         image_url: e.target[1].value,
         content: e.target[2].value,
         github_url: e.target[3].value,
-        author: "this will be currentUser.username",       
-        user_id: 1,
+        author: currentUser.username,       
+        user_id: currentUser.id,
         upvote: 0
       })
     })
