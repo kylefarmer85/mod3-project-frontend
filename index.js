@@ -121,20 +121,31 @@ function fetchPosts() {
 
 function renderPost(post) {
   currentPosts.push(post)
-
+    
   const postDiv = ce('div')
+  postDiv.innerHTML = ''
   postDiv.className = "card"
   const titleH3 = ce('h3')
   const postImage = ce('img')
   postImage.className = "post-image"
   const author = ce('p')
 
+  const titleH3 = ce('h3')
   titleH3.innerText = post.title
+
+  const postImage = ce('img')
   postImage.src = post.image_url
 
+  const author = ce('p')
   author.innerText = post.author
 
-  // const editBtn = ce("button")
+  const upVoteBtn = ce("button")
+  upVoteBtn.className = "like-btn"
+  upVoteBtn.setAttribute("data-id", post.id)
+  upVoteBtn.innerText = `${post.upvote} Up-vote`
+  upVoteBtn.value = post.upvote
+
+// const editBtn = ce("button")
   // editBtn.innerText = "Edit Post"
  
   // editBtn.addEventListener('click', () => {
@@ -147,8 +158,8 @@ function renderPost(post) {
   //     editPostForm[5].value = post.user_id
   //     editPostForm[6].value = post.id
   //   })
-
-  postDiv.append(titleH3, postImage, author)
+  
+  postDiv.append(titleH3, postImage, author, upVoteBtn)
   postsContainer.append(postDiv)
 
 // add event listener to card to append post to show-container
@@ -206,6 +217,37 @@ function createUserProfile() {
 
 }
 
+postsContainer.addEventListener('click', (e) => {
+  if (e.target.className === 'like-btn') {
+    handleUpVotes(e.target)
+  }
+})
+
+const handleUpVotes = (target) => {
+  
+  const postId = target.dataset.id
+  const upVoteCount = parseInt(target.value) + 1
+
+  const upVoteData = {
+    upvote: upVoteCount 
+  }
+
+  const reqObj = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(upVoteData)
+  }
+
+  fetch(`http://localhost:3000/api/v1/posts/${postId}`, reqObj)
+  .then(resp => resp.json())
+  .then(updatedPost => {
+    target.innerText = `${updatedPost.upvote} Up-vote`
+    target.value++  
+  })
+}
 
 
 function createPostFormEventListener() {
@@ -263,6 +305,7 @@ function createEditPostFormEventListener() {
     e.target.reset()
   })
 }
+
 
 
 main()
