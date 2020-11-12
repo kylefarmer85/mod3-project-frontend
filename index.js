@@ -225,36 +225,75 @@ function renderPost(post) {
 
 function createUserProfile() {
 
+  // fetch(`${USERS_URL}/${currentUser.id}`)
+  // .then(resp => resp.json())
+  // .then(updatedUser => {
+  //   currentUser = updatedUser
+  // })
+
   const userProfileDiv = ce('div')
   const displayUsername = ce('h2')
   const displayEmail = ce('p')
   const displayProfilePic = ce('img')
   const userPostsUl = ce('ul')
   const userCommentsUl = ce('ul')
+  const userDeleteBtn = ce('button')
+  userDeleteBtn.className = "delete-user"
+  userDeleteBtn.innerText = 'Delete My Account!'
+  
 
   displayUsername.innerText = currentUser.username
   displayEmail.innerText = currentUser.email
-  displayProfilePic.src = currentUser.profile_pic
+  displayProfilePic.src = 'https://static.wikia.nocookie.net/brawlhalla-game/images/d/d0/Rayman_Base.png/revision/latest?cb=20191010094311'
   userPostsUl.innerText = `${currentUser.username}'s Posts:`
 
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
     postLi.innerText = post.title
+    
+    const postDeleteBtn = ce('button')
+    postDeleteBtn.className = "delete"
+    postDeleteBtn.innerText = "🗑️"
+    postDeleteBtn.setAttribute('data-id', post.id)
+    postLi.append(postDeleteBtn)
     userPostsUl.append(postLi)
   })
 
-
-  userProfileDiv.append(displayUsername, displayEmail, displayProfilePic, userPostsUl)
+  userProfileDiv.append(userDeleteBtn, displayUsername, displayEmail, displayProfilePic, userPostsUl)
   profileContainer.innerHTML = ""
   profileContainer.append(userProfileDiv)
-
 }
 
-postsContainer.addEventListener('click', (e) => {
-  if (e.target.className === 'like-btn') {
-    handleUpVotes(e.target)
+profileContainer.addEventListener('click', (e) => {
+
+  if (e.target.className === 'delete'){
+    deletePost(e.target)
+  } else if (e.target.className === 'delete-user') {
+    deleteUser(e.target)
   }
 })
+
+const deleteUser = (target) => {
+  fetch(`${USERS_URL}/${currentUser.id}`, {
+    method: 'DELETE'
+  })
+  .then(resp => resp.json())
+  .then(deletedObj => {
+    target.parentElement.innerHTML = ''
+    fetchPosts();
+  })
+}
+
+const deletePost = (target) =>{
+
+  fetch(`${POSTS_URL}/${target.dataset.id}`, {
+    method: 'DELETE'
+  })
+  .then(resp => resp.json())
+  .then(deletedObj => {
+    target.parentElement.remove();
+  })
+}
 
 const handleUpVotes = (target) => {
   
@@ -281,6 +320,11 @@ const handleUpVotes = (target) => {
     target.value++  
   })
 }
+postsContainer.addEventListener('click', (e) => {
+  if (e.target.className === 'like-btn') {
+    handleUpVotes(e.target)
+  }
+})
 
 
 function createPostFormEventListener() {
@@ -306,6 +350,7 @@ function createPostFormEventListener() {
     .then(resp => resp.json())
     .then(newPost => renderPost(newPost))
 
+    // createUserProfile()
     e.target.reset()
   })  
 }
