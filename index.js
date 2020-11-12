@@ -174,6 +174,7 @@ function renderPost(post) {
       <hr class="my-4">
       <p>${post.content}</p>
       <a href=${post.github_url}>GitHub URL</a>
+      <p>by: ${post.author}</p>
       <ul id=comment>
     </div>`
 
@@ -438,6 +439,8 @@ function showPost(post) {
       <hr class="my-4">
       <p>${post.content}</p>
       <a href=${post.github_url}>GitHub URL</a>
+      <p>by: ${post.author}</p>
+
       <ul id=comment>
     </div>`
 
