@@ -114,6 +114,7 @@ function toggleUserProfile() {
     if (!currentUser) {
       return alert("You must be logged in to see your profile.")
     }
+    createUserProfile()
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
     postFormContainer.style.display = "none"
@@ -224,24 +225,24 @@ function renderPost(post) {
         .then(comment => {
           if (comment.error){
             alert(comment.error)
-          }else{
-          renderComment(comment)
+          } else {
+            updateCurrentUser()
+            renderComment(comment)
           }
         })
         e.target.reset()
       })
     showPostContainer.append(commentForm)
   })
+  
 }
 
 
 function updateCurrentUser() {
+
   fetch(`${USERS_URL}/${currentUser.id}`)
   .then(resp => resp.json())
-  .then(updatedUser => {
-   currentUser = updatedUser
-  })
-  createUserProfile()
+  .then(updatedUser => currentUser = updatedUser)
 }
 
 
@@ -413,14 +414,13 @@ function createPostFormEventListener() {
         showPost(newPost)
       }
     })
-    
-    // createUserProfile()
     postFormContainer.style.display = "none"
     e.target.reset()
   })  
 }
 
 function showPost(post) {
+
   showPostContainer.style.display = "block"
   showPostContainer.innerHTML = 
     `<div class="jumbotron">
@@ -431,7 +431,6 @@ function showPost(post) {
       <a href=${post.github_url}>GitHub URL</a>
       <ul id=comment>
     </div>`
-
 
     post.comments.forEach(renderComment) 
 
@@ -478,11 +477,13 @@ function showPost(post) {
           })
         })
         .then(resp => resp.json())
-        .then(comment => renderComment(comment))
+        .then(comment =>  {
+          renderComment(comment)
+        })
         e.target.reset()
       })
-      
     showPostContainer.append(commentForm)
+    updateCurrentUser()
 }
 
 main()
