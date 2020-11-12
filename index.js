@@ -191,21 +191,37 @@ function createUserProfile() {
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
     postLi.innerText = post.title
+
+    const deleteBtn = ce('button')
+    deleteBtn.className = "delete"
+    deleteBtn.innerText = "🗑️"
+    deleteBtn.setAttribute('data-id', post.id)
+    postLi.append(deleteBtn)
     userPostsUl.append(postLi)
   })
-
 
   userProfileDiv.append(displayUsername, displayEmail, displayProfilePic, userPostsUl)
   profileContainer.innerHTML = ""
   profileContainer.append(userProfileDiv)
-
 }
 
-postsContainer.addEventListener('click', (e) => {
-  if (e.target.className === 'like-btn') {
-    handleUpVotes(e.target)
+profileContainer.addEventListener('click', (e) => {
+
+  if (e.target.className === 'delete'){
+    deletePost(e.target)
   }
 })
+
+const deletePost = (target) =>{
+
+  fetch(`${POSTS_URL}/${target.dataset.id}`, {
+    method: 'DELETE'
+  })
+  .then(resp => resp.json())
+  .then(deletedObj => {
+    target.parentElement.remove();
+  })
+}
 
 const handleUpVotes = (target) => {
   
@@ -232,6 +248,11 @@ const handleUpVotes = (target) => {
     target.value++  
   })
 }
+postsContainer.addEventListener('click', (e) => {
+  if (e.target.className === 'like-btn') {
+    handleUpVotes(e.target)
+  }
+})
 
 
 function createPostFormEventListener() {
