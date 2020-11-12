@@ -66,6 +66,7 @@ function userLogin() {
     
     e.target.reset()
     loginContainer.style.display = "none"
+    profileContainer.style.display = "block"
   })
 }
 
@@ -155,7 +156,7 @@ function renderPost(post) {
     profileContainer.style.display = "none"
     showPostContainer.style.display = "block"
 
-    showPostContainer.innerHTML = 
+   
     // `<h1>${post.title}</h1>
     // <img src=${post.image_url}/>
     // <p>${post.content}</p>
@@ -163,6 +164,7 @@ function renderPost(post) {
     // <ul id=comment>
     // </ul>`
 
+    showPostContainer.innerHTML = 
     `<div class="jumbotron">
       <h1 class="display-4">${post.title}</h1>
       <img src=${post.image_url}/>
@@ -196,21 +198,6 @@ function renderPost(post) {
           <textarea type="text" class="form-control" name="comment" value="" placeholder=""></textarea>
         </div>
          <button type="submit" name="submit" class="btn btn-primary">Submit</button>`
-
-            //   <input
-            //   type="text"
-            //   name="comment"
-            //   value=""
-            //   placeholder="comment"
-            //   class="input-text"
-            // />
-            // <br>
-            // <input
-            //   type="submit"
-            //   name="submit"
-            //   value="Submit Comment"
-            //   class="submit"
-            // />
   
       commentForm.addEventListener("submit", (e) => {
         e.preventDefault()
@@ -405,7 +392,10 @@ function createPostFormEventListener() {
       })
     })
     .then(resp => resp.json())
-    .then(newPost => renderPost(newPost))
+    .then(newPost =>  {
+      renderPost(newPost)
+      showPost(newPost)
+    })
     
     // createUserProfile()
     postFormContainer.style.display = "none"
@@ -413,6 +403,70 @@ function createPostFormEventListener() {
   })  
 }
 
+function showPost(post) {
+  showPostContainer.style.display = "block"
+  showPostContainer.innerHTML = 
+    `<div class="jumbotron">
+      <h1 class="display-4">${post.title}</h1>
+      <img src=${post.image_url}/>
+      <hr class="my-4">
+      <p>${post.content}</p>
+      <a href=${post.github_url}>GitHub URL</a>
+      <ul id=comment>
+    </div>`
+
+
+    post.comments.forEach(renderComment) 
+
+    function renderComment(comment) {
+      const commentLi = ce('li')
+      const commentUl = document.getElementById(`comment`)
+      commentLi.innerHTML = 
+      `<p><b>Comment:</b> ${comment.text}</p>
+      <p><b>Posted by:</b> ${comment.author}</p><br><br>`
+      commentUl.append(commentLi)
+    }
+      const commentForm = ce('form')
+      commentForm.className = "comment-form"
+    
+      commentForm.innerHTML = 
+        `<input type="hidden"
+          name="id"
+          value=${post.id}
+         />
+        <div class="form-group">
+         <label for="comment">Leave a comment:</label>
+          <textarea type="text" class="form-control" name="comment" value="" placeholder=""></textarea>
+        </div>
+         <button type="submit" name="submit" class="btn btn-primary">Submit</button>`
+
+      commentForm.addEventListener("submit", (e) => {
+        e.preventDefault()
+        if (!currentUser) {
+          return alert("You must be logged in to post a comment.")
+        }
+        const newComment = e.target['comment'].value
+        const postId = e.target['id'].value
+        
+        fetch(COMMENTS_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text: newComment,
+            author: currentUser.username,
+            user_id: currentUser.id,
+            post_id: postId
+          })
+        })
+        .then(resp => resp.json())
+        .then(comment => renderComment(comment))
+        e.target.reset()
+      })
+      
+    showPostContainer.append(commentForm)
+}
 
 
 
