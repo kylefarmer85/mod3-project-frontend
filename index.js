@@ -166,13 +166,62 @@ function renderPost(post) {
       const commentLi = ce('li')
       const commentUl = document.getElementById(`comment`)
       commentLi.innerHTML = 
-      `<p>${comment.text}</p>
-      <p>${comment.author}</p>`
+      `<p><b>Comment:</b> ${comment.text}</p>
+      <p><b>Posted by:</b> ${comment.author}</p><br><br>`
       commentUl.append(commentLi)
     }
+      const commentForm = ce('form')
+    
+      commentForm.innerHTML = 
+            `<input
+              type="hidden"
+              name="id"
+              value=${post.id}
+              />
+              <input
+              type="text"
+              name="comment"
+              value=""
+              placeholder="comment"
+              class="input-text"
+            />
+            <br>
+            <input
+              type="submit"
+              name="submit"
+              value="Submit Comment"
+              class="submit"
+            />`
   
+      commentForm.addEventListener("submit", (e) => {
+        e.preventDefault()
+        if (!currentUser) {
+          return alert("You must be logged in to post a comment.")
+        }
+        const newComment = e.target['comment'].value
+        const postId = e.target['id'].value
+        
+        fetch(COMMENTS_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text: newComment,
+            author: currentUser.username,
+            user_id: currentUser.id,
+            post_id: postId
+          })
+        })
+        .then(resp => resp.json())
+        .then(comment => renderComment(comment))
+        e.target.reset()
+      })
+      
+    showPostContainer.append(commentForm)
   })
 }
+
 
 function createUserProfile() {
 
