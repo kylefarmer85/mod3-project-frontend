@@ -61,10 +61,12 @@ function userLogin() {
     .then(loggedInUser => {
       if (loggedInUser.error){
         alert(loggedInUser.error)
-      }else
+        return loginContainer.style.display = "block"
+      } else {
       //assigns user to currentUser
        currentUser = loggedInUser
       createUserProfile()
+      }
     })
     
     e.target.reset()
@@ -241,7 +243,7 @@ function createUserProfile() {
   // .then(updatedUser => {
   //   currentUser = updatedUser
   // })
-
+ 
   const userProfileDiv = ce('div')
   userProfileDiv.className = "user-profile"
 
