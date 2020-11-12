@@ -184,6 +184,7 @@ function renderPost(post) {
       commentUl.append(commentLi)
     }
       const commentForm = ce('form')
+      commentForm.className = "comment-form"
     
       commentForm.innerHTML = 
             `<input
@@ -191,20 +192,26 @@ function renderPost(post) {
               name="id"
               value=${post.id}
               />
-              <input
-              type="text"
-              name="comment"
-              value=""
-              placeholder="comment"
-              class="input-text"
-            />
-            <br>
-            <input
-              type="submit"
-              name="submit"
-              value="Submit Comment"
-              class="submit"
-            />`
+              <div class="form-group">
+              <label for="comment">Leave a comment:</label>
+              <textarea type="text" class="form-control" name="comment" value="" placeholder=""></textarea>
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>`
+
+            //   <input
+            //   type="text"
+            //   name="comment"
+            //   value=""
+            //   placeholder="comment"
+            //   class="input-text"
+            // />
+            // <br>
+            // <input
+            //   type="submit"
+            //   name="submit"
+            //   value="Submit Comment"
+            //   class="submit"
+            // />
   
       commentForm.addEventListener("submit", (e) => {
         e.preventDefault()
