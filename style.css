@@ -45,6 +45,22 @@ div.login-container {
   margin-left: auto;
 }
 
+.user-profile {
+  text-align: center;
+  margin-top: 10%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.user-posts {
+  text-align: left;
+  outline: 2px;
+}
+
+.user-comments {
+  text-align: left;
+}
+
 div.post-form-container {
   max-width: 75%;
   margin-top: 2%;

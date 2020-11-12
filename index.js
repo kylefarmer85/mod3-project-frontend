@@ -141,7 +141,7 @@ function renderPost(post) {
   const upVoteBtn = ce("button")
   upVoteBtn.className = "like-btn"
   upVoteBtn.setAttribute("data-id", post.id)
-  upVoteBtn.innerText = `${post.upvote} Up-vote`
+  upVoteBtn.innerText = `Up-vote ⬆  ${post.upvote}`
   upVoteBtn.value = post.upvote
 
   
@@ -251,26 +251,32 @@ function createUserProfile() {
   // })
 
   const userProfileDiv = ce('div')
+  userProfileDiv.className = "user-profile"
+
   const displayUsername = ce('h2')
   const displayEmail = ce('p')
   const displayProfilePic = ce('img')
+
   const userPostsUl = ce('ul')
+  userPostsUl.className = "user-posts"
   const userCommentsUl = ce('ul')
+  userCommentsUl.className = "user-comments"
+
   const userDeleteBtn = ce('button')
   userDeleteBtn.className = "delete-user"
   userDeleteBtn.innerText = 'Delete My Account!'
-  
 
   displayUsername.innerText = currentUser.username
   displayEmail.innerText = currentUser.email
   displayProfilePic.src = currentUser.profile_pic
+
   userPostsUl.innerHTML = `<strong>${currentUser.username}'s Posts</strong>`
   userCommentsUl.innerHTML = `<strong>${currentUser.username}'s Comments`
 
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
     postLi.innerHTML = 
-    `<p><em>Title:</em> ${post.title}</p>`
+    `<br><br><p><em>Title:</em> ${post.title}</p>`
     
     const postDeleteBtn = ce('button')
     postDeleteBtn.className = "delete"
@@ -283,19 +289,19 @@ function createUserProfile() {
   currentUser.comments.forEach(comment => {
     const commentLi = ce('li')
     commentLi.innerHTML = 
-    `<p><em>Comment:</em> ${comment.text}</p>`
+    `<br><br><p><em>Comment:</em> ${comment.text}</p>`
     
 
     const commentDeleteBtn = ce('button')
     commentDeleteBtn.className = "delete-comment"
-    commentDeleteBtn.innerText = "🗑️"
+    commentDeleteBtn.innerHTML = "🗑️"
     commentDeleteBtn.setAttribute('data-id', comment.id)
     commentLi.append(commentDeleteBtn)
     userCommentsUl.append(commentLi)
     
   })
 
-  userProfileDiv.append(userDeleteBtn, displayUsername, displayEmail, displayProfilePic, userPostsUl, userCommentsUl)
+  userProfileDiv.append(displayUsername, displayEmail, displayProfilePic, userPostsUl, userCommentsUl, userDeleteBtn,)
   profileContainer.innerHTML = ""
   profileContainer.append(userProfileDiv)
 }
@@ -367,7 +373,7 @@ const handleUpVotes = (target) => {
   fetch(`http://localhost:3000/api/v1/posts/${postId}`, reqObj)
   .then(resp => resp.json())
   .then(updatedPost => {
-    target.innerText = `${updatedPost.upvote} Up-vote`
+    target.innerText = `Up-vote ⬆  ${updatedPost.upvote}`
     target.value++  
   })
 }
@@ -402,6 +408,7 @@ function createPostFormEventListener() {
     .then(newPost => renderPost(newPost))
     
     // createUserProfile()
+    postFormContainer.style.display = "none"
     e.target.reset()
   })  
 }
