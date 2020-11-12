@@ -19,6 +19,14 @@ ul li {
   text-align: center;
 }
 
+.jumbotron {
+  text-align: center;
+}
+
+#comment {
+  text-align: left;
+}
+
 div.show-container {
   width: 100%;
   min-height: 500px;

@@ -156,12 +156,22 @@ function renderPost(post) {
     showPostContainer.style.display = "block"
 
     showPostContainer.innerHTML = 
-    `<h1>${post.title}</h1>
-    <img src=${post.image_url}/>
-    <p>${post.content}</p>
-    <a href=${post.github_url}>GitHub URL</a>
-    <ul id=comment>
-    </ul>`
+    // `<h1>${post.title}</h1>
+    // <img src=${post.image_url}/>
+    // <p>${post.content}</p>
+    // <a href=${post.github_url}>GitHub URL</a>
+    // <ul id=comment>
+    // </ul>`
+
+    `<div class="jumbotron">
+  <h1 class="display-4">${post.title}</h1>
+  <img src=${post.image_url}/>
+  <hr class="my-4">
+  <p>${post.content}</p>
+  <a href=${post.github_url}>GitHub URL</a>
+  <ul id=comment>
+</div>`
+
 
     post.comments.forEach(renderComment) 
 
