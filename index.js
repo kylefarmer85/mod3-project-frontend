@@ -230,20 +230,23 @@ function renderPost(post) {
         })
         e.target.reset()
       })
-      
     showPostContainer.append(commentForm)
   })
 }
 
 
+function updateCurrentUser() {
+  fetch(`${USERS_URL}/${currentUser.id}`)
+  .then(resp => resp.json())
+  .then(updatedUser => {
+   currentUser = updatedUser
+  })
+  createUserProfile()
+}
+
+
 function createUserProfile() {
 
-  // fetch(`${USERS_URL}/${currentUser.id}`)
-  // .then(resp => resp.json())
-  // .then(updatedUser => {
-  //   currentUser = updatedUser
-  // })
- 
   const userProfileDiv = ce('div')
   userProfileDiv.className = "user-profile"
 
@@ -335,7 +338,8 @@ const deletePost = (target) => {
 }
 
 const deleteComment = (target) => {
-  fetch(`${POSTS_URL}/${target.dataset.id}`, {
+  
+  fetch(`${COMMENTS_URL}/${target.dataset.id}`, {
     method: 'DELETE'
   })
   .then(resp => resp.json())
