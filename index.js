@@ -164,13 +164,13 @@ function renderPost(post) {
     // </ul>`
 
     `<div class="jumbotron">
-  <h1 class="display-4">${post.title}</h1>
-  <img src=${post.image_url}/>
-  <hr class="my-4">
-  <p>${post.content}</p>
-  <a href=${post.github_url}>GitHub URL</a>
-  <ul id=comment>
-</div>`
+      <h1 class="display-4">${post.title}</h1>
+      <img src=${post.image_url}/>
+      <hr class="my-4">
+      <p>${post.content}</p>
+      <a href=${post.github_url}>GitHub URL</a>
+      <ul id=comment>
+    </div>`
 
 
     post.comments.forEach(renderComment) 
@@ -187,16 +187,15 @@ function renderPost(post) {
       commentForm.className = "comment-form"
     
       commentForm.innerHTML = 
-            `<input
-              type="hidden"
-              name="id"
-              value=${post.id}
-              />
-              <div class="form-group">
-              <label for="comment">Leave a comment:</label>
-              <textarea type="text" class="form-control" name="comment" value="" placeholder=""></textarea>
-            </div>
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>`
+        `<input type="hidden"
+          name="id"
+          value=${post.id}
+         />
+        <div class="form-group">
+         <label for="comment">Leave a comment:</label>
+          <textarea type="text" class="form-control" name="comment" value="" placeholder=""></textarea>
+        </div>
+         <button type="submit" name="submit" class="btn btn-primary">Submit</button>`
 
             //   <input
             //   type="text"
