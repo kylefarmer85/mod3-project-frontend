@@ -29,8 +29,26 @@
   <div class="show-container">
  
     <div class="login-container">
+
       <form class="user-login">
-    
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" name="username" value="" aria-describedby="emailHelp" placeholder="Please enter your username">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Email</label>
+          <input type="text" class="form-control" name="email" value="" placeholder="Please enter your email address">
+          <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="username">Profile Picture</label>
+          <input type="text" class="form-control" name="image" value="" aria-describedby="emailHelp" placeholder="Please enter an image URL for you profile picture">
+        </div>
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+<!-- 
+      <form class="user-login">
         <input
           type="text"
           name="username"
@@ -61,7 +79,7 @@
           value="Create New User"
           class="submit"
         />
-      </form>
+      </form> -->
     </div>
 
     <div class="post-form-container">
