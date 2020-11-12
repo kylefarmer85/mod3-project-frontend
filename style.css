@@ -87,6 +87,14 @@ div.posts-container {
 
 }
 
+div.home-page {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  width: 50%;
+}
+
 div.card {
   background-color: #e9ecef;
   height: 250px;

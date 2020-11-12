@@ -5,6 +5,7 @@ function main() {
   toggleLogin()
   togglePostForm()
   toggleUserProfile()
+  toggleCodeItYourself()
   qs('#profile-nav').style.display = "none"
   qs('#new-post-nav').style.display = "none"
   loginContainer.style.display = "block"
@@ -36,6 +37,7 @@ const showContainer = qs('.show-container')
 const loginContainer = qs('.login-container')
 const showPostContainer = qs('.show-post-container')
 const profileContainer = qs('.profile-container')
+const logoContainer = qs('.home-page')
 
 
 function userLogin() {
@@ -87,6 +89,22 @@ function toggleLogin() {
     postFormContainer.style.display = "none"
     profileContainer.style.display = "none"
     showPostContainer.style.display = "none"
+    logoContainer.style.display = "none"
+  })  
+}
+
+function toggleCodeItYourself() {
+
+  const codeNav = qs('#code-nav')
+  logoContainer.style.display = "none"
+
+  codeNav.addEventListener("click", () => {
+    
+    logoContainer.style.display = "block"
+    postFormContainer.style.display = "none"
+    profileContainer.style.display = "none"
+    showPostContainer.style.display = "none"
+    loginContainer.style.display = "none"
   })  
 }
 
@@ -102,6 +120,7 @@ function togglePostForm() {
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
     profileContainer.style.display = "none"
+    logoContainer.style.display = "none"
     postFormContainer.style.display = "block"
   })
 }
@@ -119,6 +138,7 @@ function toggleUserProfile() {
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
     postFormContainer.style.display = "none"
+    logoContainer.style.display = "none"
     profileContainer.style.display = "block"
   })
 
