@@ -2,6 +2,7 @@
 body {
   margin: 10px;
   padding: 10px;
+  background-image: url("background/1_T2RkznzWBPFp3JM3L7zx5A.png");
 }
 
 ul li {
@@ -46,8 +47,11 @@ div.login-container {
 }
 
 .user-profile {
+  background-color: white;
+  width: 100%;
+  min-height: 500px;
+  max-height: 500px;
   text-align: center;
-  margin-top: 10%;
   margin-right: auto;
   margin-left: auto;
 }

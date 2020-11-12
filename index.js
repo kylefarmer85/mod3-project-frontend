@@ -7,6 +7,7 @@ function main() {
   toggleUserProfile()
   qs('#profile-nav').style.display = "none"
   qs('#new-post-nav').style.display = "none"
+  loginContainer.style.display = "block"
 }
 
 let currentPosts = []
@@ -196,8 +197,8 @@ function renderPost(post) {
           value=${post.id}
          />
         <div class="form-group">
-         <label for="comment">Leave a comment:</label>
-          <textarea type="text" class="form-control" name="comment" value="" placeholder=""></textarea>
+         <label for="comment"></label>
+          <textarea type="text" class="form-control" name="comment" value="" placeholder="Leave a Comment"></textarea>
         </div>
          <button type="submit" name="submit" class="btn btn-primary">Submit</button>`
   
@@ -327,6 +328,7 @@ const deleteUser = (target) => {
     loginContainer.style.display = "block"
     qs('#profile-nav').style.display = "none"
     qs('#new-post-nav').style.display = "none"
+    profileContainer.style.display = "none"
     fetchPosts();
   })
 }
@@ -458,8 +460,8 @@ function showPost(post) {
           value=${post.id}
          />
         <div class="form-group">
-         <label for="comment">Leave a comment:</label>
-          <textarea type="text" class="form-control" name="comment" value="" placeholder=""></textarea>
+         <label for="comment"></label>
+          <textarea type="text" class="form-control" name="comment" value="" placeholder="Leave a Comment"></textarea>
         </div>
          <button type="submit" name="submit" class="btn btn-primary">Submit</button>`
 
