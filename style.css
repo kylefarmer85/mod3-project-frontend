@@ -33,6 +33,13 @@ div.login-container {
   margin-left: auto;
 }
 
+div.post-form-container {
+  max-width: 75%;
+  margin-top: 2%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 div.posts-container {
   flex-wrap: wrap;
   display: flex;

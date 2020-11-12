@@ -159,6 +159,7 @@ function renderPost(post) {
     `<h1>${post.title}</h1>
     <img src=${post.image_url}/>
     <p>${post.content}</p>
+    <a href=${post.github_url}>GitHub URL</a>
     <ul id=comment>
     </ul>`
 
@@ -383,7 +384,7 @@ function createPostFormEventListener() {
     })
     .then(resp => resp.json())
     .then(newPost => renderPost(newPost))
-
+    
     // createUserProfile()
     e.target.reset()
   })  
