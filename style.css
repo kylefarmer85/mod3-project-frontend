@@ -5,6 +5,10 @@ body {
   background-image: url("background/1_T2RkznzWBPFp3JM3L7zx5A.png");
 }
 
+.login-header {
+  color: white;
+}
+
 ul li {
   list-style: none;
 }
