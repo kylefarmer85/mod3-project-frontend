@@ -244,7 +244,7 @@ function createUserProfile() {
 
   displayUsername.innerText = currentUser.username
   displayEmail.innerText = currentUser.email
-  displayProfilePic.src = 'https://static.wikia.nocookie.net/brawlhalla-game/images/d/d0/Rayman_Base.png/revision/latest?cb=20191010094311'
+  displayProfilePic.src = currentUser.profile_pic
   userPostsUl.innerText = `${currentUser.username}'s Posts:`
 
   currentUser.posts.forEach(post => {
