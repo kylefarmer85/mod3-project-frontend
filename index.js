@@ -1,14 +1,12 @@
 function main() {
   fetchPosts()
   createPostFormEventListener()
- 
-  // fetchUser()
-  // hideForm() 
   userLogin()
   toggleLogin()
   togglePostForm()
   toggleUserProfile()
-
+  qs('#profile-nav').style.display = "none"
+  qs('#new-post-nav').style.display = "none"
 }
 
 let currentPosts = []
@@ -72,6 +70,8 @@ function userLogin() {
     e.target.reset()
     loginContainer.style.display = "none"
     profileContainer.style.display = "block"
+    qs('#profile-nav').style.display = "block"
+    qs('#new-post-nav').style.display = "block"
   })
 }
 
@@ -321,7 +321,11 @@ const deleteUser = (target) => {
   })
   .then(resp => resp.json())
   .then(deletedObj => {
+    currentUser = null
     target.parentElement.innerHTML = ''
+    loginContainer.style.display = "block"
+    qs('#profile-nav').style.display = "none"
+    qs('#new-post-nav').style.display = "none"
     fetchPosts();
   })
 }
