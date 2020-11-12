@@ -90,12 +90,13 @@ function togglePostForm() {
   postFormContainer.style.display = "none"
 
   postFormNav.addEventListener("click", () => {
-    if (currentUser) {
+    if (!currentUser) {
+      return alert("You must be logged in to make a new post.")
+    }
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
     profileContainer.style.display = "none"
     postFormContainer.style.display = "block"
-    }
   })
 }
 
@@ -105,6 +106,9 @@ function toggleUserProfile() {
   profileContainer.style.display = "none"
 
   profileNav.addEventListener("click", () => {
+    if (!currentUser) {
+      return alert("You must be logged in to see your profile.")
+    }
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
     postFormContainer.style.display = "none"
@@ -133,8 +137,8 @@ function renderPost(post) {
   postImage.className = "post-image"
   postImage.src = post.image_url
 
-  const titleH3 = ce('h3')
-  titleH3.innerText = post.title
+  const titleH4 = ce('h4')
+  titleH4.innerText = post.title
 
   const author = ce('p')
   author.innerText = post.author
@@ -146,7 +150,7 @@ function renderPost(post) {
   upVoteBtn.value = post.upvote
 
   
-  postDiv.append(titleH3, postImage, author, upVoteBtn)
+  postDiv.append(titleH4, postImage, author, upVoteBtn)
   postsContainer.append(postDiv)
 
 // add event listener to card to append post to show-container
@@ -155,14 +159,6 @@ function renderPost(post) {
     postFormContainer.style.display = "none"
     profileContainer.style.display = "none"
     showPostContainer.style.display = "block"
-
-   
-    // `<h1>${post.title}</h1>
-    // <img src=${post.image_url}/>
-    // <p>${post.content}</p>
-    // <a href=${post.github_url}>GitHub URL</a>
-    // <ul id=comment>
-    // </ul>`
 
     showPostContainer.innerHTML = 
     `<div class="jumbotron">
@@ -340,7 +336,9 @@ const deleteComment = (target) => {
 
 
 const handleUpVotes = (target) => {
-  
+  if (!currentUser) {
+    return alert("You must be logged in to upvote a post.")
+  }
   const postId = target.dataset.id
   const upVoteCount = parseInt(target.value) + 1
 

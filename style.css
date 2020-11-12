@@ -80,12 +80,12 @@ div.posts-container {
 }
 
 div.card {
-  background-color: #eeeeee;
+  background-color: #e9ecef;
   height: 250px;
   width: 300px;
-  box-shadow: 10px 10px grey;
+  box-shadow: 5px 5px grey;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 0px;
   overflow: hidden
   
 }
