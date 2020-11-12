@@ -114,6 +114,8 @@ function toggleUserProfile() {
 
 
 function fetchPosts() {
+  postsContainer.innerHTML = ""
+  
   fetch(POSTS_URL)
   .then(resp => resp.json())
   .then(posts => posts.forEach(renderPost))
@@ -245,11 +247,13 @@ function createUserProfile() {
   displayUsername.innerText = currentUser.username
   displayEmail.innerText = currentUser.email
   displayProfilePic.src = currentUser.profile_pic
-  userPostsUl.innerText = `${currentUser.username}'s Posts:`
+  userPostsUl.innerHTML = `<strong>${currentUser.username}'s Posts</strong>`
+  userCommentsUl.innerHTML = `<strong>${currentUser.username}'s Comments`
 
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
-    postLi.innerText = post.title
+    postLi.innerHTML = 
+    `<p><em>Title:</em> ${post.title}</p>`
     
     const postDeleteBtn = ce('button')
     postDeleteBtn.className = "delete"
@@ -259,7 +263,22 @@ function createUserProfile() {
     userPostsUl.append(postLi)
   })
 
-  userProfileDiv.append(userDeleteBtn, displayUsername, displayEmail, displayProfilePic, userPostsUl)
+  currentUser.comments.forEach(comment => {
+    const commentLi = ce('li')
+    commentLi.innerHTML = 
+    `<p><em>Comment:</em> ${comment.text}</p>`
+    
+
+    const commentDeleteBtn = ce('button')
+    commentDeleteBtn.className = "delete-comment"
+    commentDeleteBtn.innerText = "🗑️"
+    commentDeleteBtn.setAttribute('data-id', comment.id)
+    commentLi.append(commentDeleteBtn)
+    userCommentsUl.append(commentLi)
+    
+  })
+
+  userProfileDiv.append(userDeleteBtn, displayUsername, displayEmail, displayProfilePic, userPostsUl, userCommentsUl)
   profileContainer.innerHTML = ""
   profileContainer.append(userProfileDiv)
 }
@@ -270,6 +289,8 @@ profileContainer.addEventListener('click', (e) => {
     deletePost(e.target)
   } else if (e.target.className === 'delete-user') {
     deleteUser(e.target)
+  } else if (e.target.className === 'delete-comment') {
+    deleteComment(e.target)
   }
 })
 
@@ -284,7 +305,7 @@ const deleteUser = (target) => {
   })
 }
 
-const deletePost = (target) =>{
+const deletePost = (target) => {
 
   fetch(`${POSTS_URL}/${target.dataset.id}`, {
     method: 'DELETE'
@@ -292,8 +313,21 @@ const deletePost = (target) =>{
   .then(resp => resp.json())
   .then(deletedObj => {
     target.parentElement.remove();
+    fetchPosts()
   })
 }
+
+const deleteComment = (target) => {
+  fetch(`${POSTS_URL}/${target.dataset.id}`, {
+    method: 'DELETE'
+  })
+  .then(resp => resp.json())
+  .then(deletedObj => {
+    target.parentElement.remove();
+    fetchPosts()
+  })
+}
+
 
 const handleUpVotes = (target) => {
   
