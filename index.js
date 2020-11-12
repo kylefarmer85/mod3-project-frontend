@@ -321,6 +321,7 @@ const deleteUser = (target) => {
   })
   .then(resp => resp.json())
   .then(deletedObj => {
+    alert(`${currentUser.username} was DELETED`)
     currentUser = null
     target.parentElement.innerHTML = ''
     loginContainer.style.display = "block"
@@ -337,6 +338,7 @@ const deletePost = (target) => {
   })
   .then(resp => resp.json())
   .then(deletedObj => {
+    alert(`${deletedObj.post.title} was DELETED`)
     target.parentElement.remove();
     fetchPosts()
   })
@@ -349,6 +351,7 @@ const deleteComment = (target) => {
   })
   .then(resp => resp.json())
   .then(deletedObj => {
+    alert(`${deletedObj.comment.text} was DELETED`)
     target.parentElement.remove();
     fetchPosts()
   })
