@@ -59,8 +59,11 @@ function userLogin() {
     })
     .then(resp => resp.json())
     .then(loggedInUser => {
+      if (loggedInUser.error){
+        alert(loggedInUser.error)
+      }else
       //assigns user to currentUser
-      currentUser = loggedInUser
+       currentUser = loggedInUser
       createUserProfile()
     })
     
@@ -220,7 +223,13 @@ function renderPost(post) {
           })
         })
         .then(resp => resp.json())
-        .then(comment => renderComment(comment))
+        .then(comment => {
+          if (comment.error){
+            alert(comment.error)
+          }else{
+          renderComment(comment)
+          }
+        })
         e.target.reset()
       })
       
@@ -393,8 +402,12 @@ function createPostFormEventListener() {
     })
     .then(resp => resp.json())
     .then(newPost =>  {
-      renderPost(newPost)
-      showPost(newPost)
+      if (newPost.error){
+        alert(newPost.error)
+      }else{
+        renderPost(newPost)
+        showPost(newPost)
+      }
     })
     
     // createUserProfile()
@@ -467,8 +480,6 @@ function showPost(post) {
       
     showPostContainer.append(commentForm)
 }
-
-
 
 main()
 
