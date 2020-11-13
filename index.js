@@ -43,6 +43,7 @@ const profileContainer = qs('.profile-container')
 const editUserContainer = qs('.edit-user-container')
 const editUserForm = qs('.edit-user-form')
 const logoContainer = qs('.home-page')
+const loginNav = qs('#login-nav')
 
 
 function userLogin() {
@@ -80,13 +81,14 @@ function userLogin() {
     profileContainer.style.display = "block"
     qs('#profile-nav').style.display = "block"
     qs('#new-post-nav').style.display = "block"
+    loginNav.innerText = "Logout"
   })
 }
 
 
 function toggleLogin() {
 
-  const loginNav = qs('#login-nav')
+  
   loginContainer.style.display = "none"
 
   loginNav.addEventListener("click", () => {
@@ -96,8 +98,15 @@ function toggleLogin() {
     profileContainer.style.display = "none"
     showPostContainer.style.display = "none"
     logoContainer.style.display = "none"
-  })  
-}
+    if (loginNav.innerText === "Logout") {
+      loginNav.innerText = "Login"
+      qs('#profile-nav').style.display = "none"
+      qs('#new-post-nav').style.display = "none"
+      currentUser = null
+    }
+  })
+}  
+
 
 function toggleCodeItYourself() {
 
