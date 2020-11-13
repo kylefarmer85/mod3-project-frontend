@@ -329,6 +329,8 @@ function createUserProfile() {
 
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
+    postLi.className = "user-post-li"
+    postLi.setAttribute("data-id", post.id)
     postLi.innerHTML = 
     `<br><p>Title: ${post.title}</p>`
     
@@ -372,6 +374,8 @@ profileContainer.addEventListener('click', (e) => {
     deleteComment(e.target)
   } else if (e.target.className === 'edit-user') {
     editUser()
+  } else if (e.target.className === 'user-post-li') {
+    fetchPost(e)
   }
 
 })
@@ -428,6 +432,13 @@ const deleteComment = (target) => {
       qs(".user-comments").innerHTML = `<em>${currentUser.username} hasn't made any comments</em>`
     }
   })
+}
+
+function fetchPost(e) {
+  fetch(`${POSTS_URL}/${e.target.dataset.id}`)
+  .then(resp => resp.json())
+  .then(postObj => showPost(postObj))
+  profileContainer.style.display = "none"
 }
 
 
