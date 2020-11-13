@@ -59,6 +59,7 @@ div.edit-user-container {
 
 .user-profile {
   background-color: white;
+  min-height: 500px;
   width: 100%;
   text-align: center;
   margin-right: auto;
