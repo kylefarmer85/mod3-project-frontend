@@ -73,15 +73,16 @@ function userLogin() {
       //assigns user to currentUser
        currentUser = loggedInUser
       createUserProfile()
+      loginContainer.style.display = "none"
+      profileContainer.style.display = "block"
+      qs('#profile-nav').style.display = "block"
+      qs('#new-post-nav').style.display = "block"
+      loginNav.innerText = "Logout"
       }
     })
     
     e.target.reset()
-    loginContainer.style.display = "none"
-    profileContainer.style.display = "block"
-    qs('#profile-nav').style.display = "block"
-    qs('#new-post-nav').style.display = "block"
-    loginNav.innerText = "Logout"
+
   })
 }
 
