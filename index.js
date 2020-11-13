@@ -5,9 +5,12 @@ function main() {
   toggleLogin()
   togglePostForm()
   toggleUserProfile()
+
   qs('#profile-nav').style.display = "none"
   qs('#new-post-nav').style.display = "none"
+  editUserContainer.style.display = "none"
   loginContainer.style.display = "block"
+
 }
 
 let currentPosts = []
@@ -36,6 +39,8 @@ const showContainer = qs('.show-container')
 const loginContainer = qs('.login-container')
 const showPostContainer = qs('.show-post-container')
 const profileContainer = qs('.profile-container')
+const editUserContainer = qs('.edit-user-container')
+const editUserForm = qs('.edit-user-form')
 
 
 function userLogin() {
@@ -84,6 +89,7 @@ function toggleLogin() {
 
   loginNav.addEventListener("click", () => {
     loginContainer.style.display = "block"
+    editUserContainer.style.display = "none"
     postFormContainer.style.display = "none"
     profileContainer.style.display = "none"
     showPostContainer.style.display = "none"
@@ -102,6 +108,7 @@ function togglePostForm() {
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
     profileContainer.style.display = "none"
+    editUserContainer.style.display = "none"
     postFormContainer.style.display = "block"
   })
 }
@@ -119,6 +126,7 @@ function toggleUserProfile() {
     loginContainer.style.display = "none"
     showPostContainer.style.display = "none"
     postFormContainer.style.display = "none"
+    editUserContainer.style.display = "none"
     profileContainer.style.display = "block"
   })
 
@@ -165,6 +173,7 @@ function renderPost(post) {
     loginContainer.style.display = "none"
     postFormContainer.style.display = "none"
     profileContainer.style.display = "none"
+    editUserContainer.style.display = "none"
     showPostContainer.style.display = "block"
 
     showPostContainer.innerHTML = 
@@ -266,12 +275,16 @@ function createUserProfile() {
   userDeleteBtn.className = "delete-user"
   userDeleteBtn.innerText = 'Delete My Account!'
 
+  const userEditBtn = ce('button')
+  userEditBtn.className = "edit-user"
+  userEditBtn.innerText = 'Edit Profile'
+
   displayUsername.innerText = currentUser.username
   displayEmail.innerText = currentUser.email
   displayProfilePic.src = currentUser.profile_pic
 
-  userPostsUl.innerHTML = `<strong>${currentUser.username}'s Posts</strong>`
-  userCommentsUl.innerHTML = `<strong>${currentUser.username}'s Comments`
+  userPostsUl.innerHTML = `<br><strong>${currentUser.username}'s Posts</strong>`
+  userCommentsUl.innerHTML = `<br><strong>${currentUser.username}'s Comments</strong><br>`
 
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
@@ -301,7 +314,7 @@ function createUserProfile() {
     
   })
 
-  userProfileDiv.append(displayUsername, displayEmail, displayProfilePic, userPostsUl, userCommentsUl, userDeleteBtn,)
+  userProfileDiv.append(displayUsername, displayEmail, displayProfilePic, userPostsUl, userCommentsUl, userEditBtn, userDeleteBtn)
   profileContainer.innerHTML = ""
   profileContainer.append(userProfileDiv)
 }
@@ -314,7 +327,10 @@ profileContainer.addEventListener('click', (e) => {
     deleteUser(e.target)
   } else if (e.target.className === 'delete-comment') {
     deleteComment(e.target)
+  } else if (e.target.className === 'edit-user') {
+    editUser()
   }
+
 })
 
 const deleteUser = (target) => {
@@ -358,6 +374,18 @@ const deleteComment = (target) => {
     target.parentElement.remove();
     fetchPosts()
   })
+}
+
+
+const editUser = () => {
+  profileContainer.style.display = "none"
+  editUserContainer.style.display = "block" 
+
+  editUserForm[0].value = currentUser.username
+  editUserForm[1].value = currentUser.email
+  editUserForm[2].value = currentUser.profile_pic
+
+  createEditFormListener()
 }
 
 
@@ -496,6 +524,40 @@ function showPost(post) {
       })
     showPostContainer.append(commentForm)
     updateCurrentUser()
+}
+
+function createEditFormListener() {
+
+  editUserForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    fetch (`${USERS_URL}/${currentUser.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        username: e.target[0].value,
+        email: e.target[1].value,
+        profile_pic: e.target[2].value
+
+      })
+    })
+    .then(resp => resp.json())
+    .then(updatedUser => {
+      if (updatedUser.error){
+        alert(updatedUser.error)
+        return editUserContainer.style.display = "block"
+      } else {
+        //assigns user to currentUser
+        currentUser = updatedUser
+        createUserProfile()
+        editUserContainer.style.display = "none"
+        profileContainer.style.display = "block"
+      }
+    })
+  })    
 }
 
 main()

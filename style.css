@@ -50,11 +50,16 @@ div.login-container {
   margin-left: auto;
 }
 
+div.edit-user-container {
+  max-width: 50%;
+  margin-top: 10%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .user-profile {
   background-color: white;
   width: 100%;
-  min-height: 500px;
-  max-height: 500px;
   text-align: center;
   margin-right: auto;
   margin-left: auto;

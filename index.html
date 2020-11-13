@@ -31,7 +31,7 @@
     <div class="login-container">
       <form class="user-login">
         <div class="form-group">
-          <label for="username" class="login-header"><h1>Login</h1></label>
+          <label for="username" class="login-header" ><h1>Login</h1></label>
           <input type="text" class="form-control" name="username" value="" aria-describedby="emailHelp" placeholder="Please enter your username">
         </div>
         <div class="form-group">
@@ -47,49 +47,14 @@
         </div>
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
       </form>
-
-<!-- 
-      <form class="user-login">
-        <input
-          type="text"
-          name="username"
-          value=""
-          placeholder="Enter a username"
-          class="input-text"
-        />
-        <br />
-        <input
-          type="text"
-          name="email"
-          value=""
-          placeholder="Enter a email"
-          class="input-text"
-        />
-        <br />
-        <input
-          type="text"
-          name="image"
-          value=""
-          placeholder="Enter a image URL for your profile"
-          class="input-text"
-        />
-        <br />
-        <input
-          type="submit"
-          name="submit"
-          value="Create New User"
-          class="submit"
-        />
-      </form> -->
     </div>
 
     <div class="post-form-container">
 
-
       <form class="post-form">
         <div class="form-group">
           <br>
-          <!-- <label for="title">Title</label> -->
+          <label for="new-post" class="login-header" ><h1>Create a New Post</h1></label>
           <input type="text" class="form-control" name="title" value="" aria-describedby="emailHelp" placeholder="Please enter a title">
         </div>
         <div class="form-group">
@@ -109,48 +74,26 @@
         </div>
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
       </form>
+    </div>
 
+    <div class="edit-user-container">
 
-      <!-- <form class="post-form">
-        <input
-            type="text"
-            name="title"
-            value=""
-            placeholder="Add a title"
-            class="input-text"
-          />
+      <form class="edit-user-form">
+        <div class="form-group">
+          <label for="username" class="login-header" ><h1>Edit User</h1></label>
+          <input type="text" class="form-control" name="username" value="" aria-describedby="emailHelp" placeholder="Please enter a new username">
+        </div>
+        <div class="form-group">
           <br>
-          <input
-            type="text"
-            name="image_url"
-            value=""
-            placeholder="Add an image URL"
-            class="input-text"
-          />
+          <input type="text" class="form-control" name="email" value="" placeholder="Please enter a new email address">
+        </div>
+        <div class="form-group">
           <br>
-          <input
-            type="text"
-            name="content"
-            value=""
-            placeholder="Content"
-            class="input-text"
-          />
-          <br>
-          <input
-            type="text"
-            name="github_url"
-            value=""
-            placeholder="Add GitHub URL"
-            class="input-text"
-          />
-          <br>
-          <input
-            type="submit"
-            name="submit"
-            value="Submit New Post"
-            class="submit"
-          />
-      </form> -->
+          <input type="text" class="form-control" name="image" value="" aria-describedby="emailHelp" placeholder="Please enter a new image URL for you profile picture">
+        </div>
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+      </form>
+      
     </div>
 
     <div class="profile-container">
