@@ -76,6 +76,7 @@ function userLogin() {
       loginContainer.style.display = "none"
       profileContainer.style.display = "block"
       qs('#profile-nav').style.display = "block"
+      qs('#profile-text').innerText = `${currentUser.username}'s Profile`
       qs('#new-post-nav').style.display = "block"
       loginNav.innerText = "Logout"
       }
