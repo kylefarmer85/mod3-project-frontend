@@ -315,14 +315,22 @@ function createUserProfile() {
   displayEmail.innerText = currentUser.email
   displayProfilePic.src = currentUser.profile_pic
   
-  userPostsUl.innerHTML = `<br><strong>${currentUser.username}'s Posts</strong>`
-  
+  if (currentUser.posts.length === 0) {
+    userPostsUl.innerHTML = `<em>${currentUser.username} has no posts</em>`
+  } else {
+  userPostsUl.innerHTML = `<strong>${currentUser.username}'s Posts</strong>`
+  }
+
+  if (currentUser.comments.length === 0) {
+    userCommentsUl.innerHTML = `<em>${currentUser.username} hasn't made any comments</em>`
+  } else {
   userCommentsUl.innerHTML = `<br><strong>${currentUser.username}'s Comments</strong><br>`
+  }
 
   currentUser.posts.forEach(post => {
     const postLi = ce('li')
     postLi.innerHTML = 
-    `<br><br><p><em>Title:</em> ${post.title}</p>`
+    `<br><p>Title: ${post.title}</p>`
     
     const postDeleteBtn = ce('button')
     postDeleteBtn.className = "delete"
@@ -335,7 +343,7 @@ function createUserProfile() {
   currentUser.comments.forEach(comment => {
     const commentLi = ce('li')
     commentLi.innerHTML = 
-    `<br><br><p><em>Comment:</em> ${comment.text}</p>`
+    `<br><p>Comment: ${comment.text}</p>`
     
 
     const commentDeleteBtn = ce('button')
@@ -357,7 +365,9 @@ profileContainer.addEventListener('click', (e) => {
   if (e.target.className === 'delete'){
     deletePost(e.target)
   } else if (e.target.className === 'delete-user') {
+    if (window.confirm(`Are you sure you want to delete "${currentUser.username}"?`)) {
     deleteUser(e.target)
+    }
   } else if (e.target.className === 'delete-comment') {
     deleteComment(e.target)
   } else if (e.target.className === 'edit-user') {
@@ -379,7 +389,8 @@ const deleteUser = (target) => {
     qs('#profile-nav').style.display = "none"
     qs('#new-post-nav').style.display = "none"
     profileContainer.style.display = "none"
-    fetchPosts();
+    fetchPosts()
+    loginNav.innerText = "Login"
   })
 }
 
@@ -394,6 +405,10 @@ const deletePost = (target) => {
     target.parentElement.remove();
     updateCurrentUser()
     fetchPosts()
+    
+    if (currentUser.posts.length === 1) {
+      qs(".user-posts").innerHTML = `<em>${currentUser.username} has no posts</em>`
+    }
   })
 }
 
@@ -408,6 +423,10 @@ const deleteComment = (target) => {
     target.parentElement.remove();
     updateCurrentUser()
     fetchPosts()
+
+    if (currentUser.comments.length === 1) {
+      qs(".user-comments").innerHTML = `<em>${currentUser.username} hasn't made any comments</em>`
+    }
   })
 }
 
