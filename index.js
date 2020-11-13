@@ -176,7 +176,7 @@ function renderPost(post) {
   titleH4.innerText = post.title
 
   const author = ce('p')
-  author.innerText = post.author
+  author.innerText = `by: ${post.author}`
 
   const upVoteBtn = ce("button")
   upVoteBtn.className = "like-btn"
@@ -487,7 +487,7 @@ function showPost(post) {
   showPostContainer.innerHTML = 
     `<div class="jumbotron">
       <h1 class="display-4">${post.title}</h1>
-      <img src=${post.image_url}/>
+      <img src="${post.image_url}">
       <hr class="my-4">
       <p>${post.content}</p>
       <a href=${post.github_url}>GitHub URL</a>
