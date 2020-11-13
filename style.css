@@ -24,6 +24,12 @@ ul li {
   text-align: center;
 }
 
+.like-btn {
+  position: absolute; 
+  bottom: 0;
+  margin:0 auto;
+}
+
 .jumbotron {
   text-align: center;
 }

@@ -303,8 +303,9 @@ function createUserProfile() {
   displayUsername.innerText = currentUser.username
   displayEmail.innerText = currentUser.email
   displayProfilePic.src = currentUser.profile_pic
-
+  
   userPostsUl.innerHTML = `<br><strong>${currentUser.username}'s Posts</strong>`
+  
   userCommentsUl.innerHTML = `<br><strong>${currentUser.username}'s Comments</strong><br>`
 
   currentUser.posts.forEach(post => {
@@ -586,65 +587,3 @@ function createEditFormListener() {
 main()
 
 
-
-
-// function fetchUser() {
-//   fetch(USERS_URL)
-//   .then(resp => resp.json())
-//   .then(users => 
-//     users.forEach(user => renderUser(user))
-// )}
-
-// function renderUser(user) {
-//   currentuser = user
-//   const userDiv = ce('div')
-
-//   const userName = ce('p')
-//   userName.innerText = user.userName
-
-//   const profilePic = ce('img')
-//   profilePic.src = user.profile_pic
-
-//   const email = ce('h4')
-//   email.innerText = user.email
-
-//   const space = ce('br')
-
-//   const editBtn = ce('button')
-//   editBtn.className = "user-edit-btn"
-//   editBtn.innerText = "Edit"
-
-//   editBtn.addEventListener("click", (e) => {
-  
-
-//     const email = e.target.previousElementSibling.previousElementSibling.innerText
-
-//     // profile_pic
-//     const userImage = e.target.previousElementSibling.previousElementSibling.previousElementSibling.src
-
-//     // profileName is the user name 
-//     const profileName = e.target.parentElement.firstElementChild.innerText
-
-    
-//   })
-
-//   userDiv.append(userName, profilePic, email, space, editBtn)
-//   usersContainer.append(userDiv)
-
-// }
-
-
-// function hideForm() {
-//   let addUser = false;
-//   const newUserBtn = document.querySelector("#new-user-btn");
-//   const userFormContainer = document.querySelector(".container");
-//   newUserBtn.addEventListener("click", () => {
-//     // hide & seek with the form
-//     addUser = !addUser;
-//     if (addUser) {
-//       userFormContainer.style.display = "none";
-//     } else {
-//       userFormContainer.style.display = "block";
-//     }
-//   });
-// }
