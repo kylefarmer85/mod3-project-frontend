@@ -380,6 +380,7 @@ const deletePost = (target) => {
   .then(deletedObj => {
     alert(`${deletedObj.post.title} was DELETED`)
     target.parentElement.remove();
+    updateCurrentUser()
     fetchPosts()
   })
 }
@@ -393,6 +394,7 @@ const deleteComment = (target) => {
   .then(deletedObj => {
     alert(`${deletedObj.comment.text} was DELETED`)
     target.parentElement.remove();
+    updateCurrentUser()
     fetchPosts()
   })
 }
