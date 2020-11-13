@@ -6,10 +6,11 @@ function main() {
   togglePostForm()
   toggleUserProfile()
 
+  toggleCodeItYourself()
   qs('#profile-nav').style.display = "none"
   qs('#new-post-nav').style.display = "none"
   editUserContainer.style.display = "none"
-  loginContainer.style.display = "block"
+  loginContainer.style.display = "none"
 
 }
 
@@ -41,6 +42,7 @@ const showPostContainer = qs('.show-post-container')
 const profileContainer = qs('.profile-container')
 const editUserContainer = qs('.edit-user-container')
 const editUserForm = qs('.edit-user-form')
+const logoContainer = qs('.home-page')
 
 
 function userLogin() {
@@ -93,6 +95,22 @@ function toggleLogin() {
     postFormContainer.style.display = "none"
     profileContainer.style.display = "none"
     showPostContainer.style.display = "none"
+    logoContainer.style.display = "none"
+  })  
+}
+
+function toggleCodeItYourself() {
+
+  const codeNav = qs('#code-nav')
+  logoContainer.style.display = "block"
+
+  codeNav.addEventListener("click", () => {
+    
+    logoContainer.style.display = "block"
+    postFormContainer.style.display = "none"
+    profileContainer.style.display = "none"
+    showPostContainer.style.display = "none"
+    loginContainer.style.display = "none"
   })  
 }
 
@@ -109,6 +127,7 @@ function togglePostForm() {
     showPostContainer.style.display = "none"
     profileContainer.style.display = "none"
     editUserContainer.style.display = "none"
+    logoContainer.style.display = "none"
     postFormContainer.style.display = "block"
   })
 }
@@ -127,6 +146,7 @@ function toggleUserProfile() {
     showPostContainer.style.display = "none"
     postFormContainer.style.display = "none"
     editUserContainer.style.display = "none"
+    logoContainer.style.display = "none"
     profileContainer.style.display = "block"
   })
 
@@ -175,6 +195,7 @@ function renderPost(post) {
     profileContainer.style.display = "none"
     editUserContainer.style.display = "none"
     showPostContainer.style.display = "block"
+    logoContainer.style.display = "none"
 
     showPostContainer.innerHTML = 
     `<div class="jumbotron">
