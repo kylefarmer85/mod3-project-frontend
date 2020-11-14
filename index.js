@@ -226,8 +226,8 @@ function renderPost(post) {
       const commentLi = ce('li')
       const commentUl = document.getElementById(`comment`)
       commentLi.innerHTML = 
-      `<p><b>Comment:</b> ${comment.text}</p>
-      <p><b>Posted by:</b> ${comment.author}</p><br><br>`
+      `<p><br><b>Comment:</b> ${comment.text}<br>
+      <b>Posted by:</b> ${comment.author}</p><br><br>`
       commentUl.append(commentLi)
     }
       const commentForm = ce('form')

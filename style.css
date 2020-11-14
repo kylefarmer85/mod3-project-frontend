@@ -95,11 +95,22 @@ div.post-form-container {
   margin-left: auto;
 }
 
+.show-post-container p {
+  text-align: left;
+}
+
+.home-page {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 div.posts-container {
+  justify-content: flex-start;
   flex-wrap: wrap;
   display: flex;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
+  /* grid-template-columns: 1fr;
+  grid-template-rows: auto; */
   grid-gap: 20px;
   padding-top: 10px;
   padding-bottom: 30px;
